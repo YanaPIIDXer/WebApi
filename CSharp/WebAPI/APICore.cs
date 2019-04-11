@@ -11,7 +11,6 @@ namespace WebAPI
 	/// </summary>
 	public class APICore
 	{
-
 		/// <summary>
 		/// ホスト
 		/// </summary>
@@ -31,6 +30,29 @@ namespace WebAPI
 				Host += "/";
 			}
 		}
-		
+
+		/// <summary>
+		/// ＡＰＩコマンドをＰＯＳＴで生成。
+		/// </summary>
+		/// <param name="API">ＡＰＩ</param>
+		/// <returns>APICommandオブジェクト</returns>
+		public APICommand CreatePost(string API)
+		{
+			string URL = Host + API;
+			APICommand Command = APICommand.CraeteAsPost(URL);
+			return Command;
+		}
+
+		/// <summary>
+		/// ＡＰＩコマンドをＧＥＴで生成。
+		/// </summary>
+		/// <param name="API">ＡＰＩ</param>
+		/// <returns>APICommandオブジェクト</returns>
+		public APICommand CreateAsGet(string API)
+		{
+			string URL = Host + API;
+			APICommand Command = APICommand.CreateAsGet(URL);
+			return Command;
+		}
 	}
 }
