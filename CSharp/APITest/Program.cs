@@ -1,9 +1,8 @@
 ﻿using System;
 using WebAPI;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 #pragma warning disable 649
 
@@ -70,8 +69,7 @@ namespace APITest
 			Command.GetResponse((Response) =>
 			{
 				Console.WriteLine("URI:" + Response.ResponseUri.ToString() + "\n");
-				var Serializer = new DataContractJsonSerializer(typeof(IList<UserData>));
-				IList<UserData> Users = (IList<UserData>)Serializer.ReadObject(Response.GetResponseStream());
+				IList<UserData> Users = JsonHelper.Deserialize<IList<UserData>>(Response.GetResponseStream());
 				if(Users == null)
 				{
 					Console.WriteLine("Fuck!!");
