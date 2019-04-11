@@ -69,6 +69,7 @@ namespace APITest
 			var Command = Core.CreateAsGet("users?page=1&per_page=50");
 			Command.GetResponse((Response) =>
 			{
+				Console.WriteLine("URI:" + Response.ResponseUri.ToString() + "\n");
 				var Serializer = new DataContractJsonSerializer(typeof(IList<UserData>));
 				IList<UserData> Users = (IList<UserData>)Serializer.ReadObject(Response.GetResponseStream());
 				if(Users == null)
