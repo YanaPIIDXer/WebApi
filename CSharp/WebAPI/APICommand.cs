@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
-using System.Net.Http;
+using System.IO;
 
 namespace WebAPI
 {
@@ -49,6 +49,24 @@ namespace WebAPI
 		/// Webリクエスト
 		/// </summary>
 		private WebRequest Request;
+
+		/// <summary>
+		/// レスポンスを取得。
+		/// </summary>
+		/// <returns></returns>
+		public string GetResponse()
+		{
+			var Response = Request.GetResponse();
+			string Ret = "";
+			using (Response)
+			{
+				using (var ResponseStream = new StreamReader(Response.GetResponseStream()))
+				{
+					Ret = ResponseStream.ReadToEnd();
+				}
+			}
+			return Ret;
+		}
 
 		/// <summary>
 		/// コンストラクタ
