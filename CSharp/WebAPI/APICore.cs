@@ -29,19 +29,6 @@ namespace WebAPI
 				Host += "/";
 			}
 		}
-
-		#region Test
-
-		/// <summary>
-		/// ホストを取得。
-		/// </summary>
-		/// <returns>ホスト</returns>
-		public string GetHost()
-		{
-			return Host;
-		}
-
-		#endregion
-
+		
 	}
 }
