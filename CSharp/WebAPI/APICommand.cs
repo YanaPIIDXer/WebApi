@@ -93,9 +93,9 @@ namespace WebAPI
 				{
 					RequestStream.Write(Bytes, 0, Bytes.Length);
 				}
-
 			}
 
+			// レスポンス
 			var Response = Request.GetResponse();
 			string Ret = "";
 			using (Response)
