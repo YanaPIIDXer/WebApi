@@ -21,10 +21,27 @@ namespace WebAPI
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="InHost">ホスト</param>
-		APICore(string InHost)
+		public APICore(string InHost)
 		{
 			Host = InHost;
+			if(Host.Substring(Host.Length - 1) != "/")
+			{
+				Host += "/";
+			}
 		}
-		
+
+		#region Test
+
+		/// <summary>
+		/// ホストを取得。
+		/// </summary>
+		/// <returns>ホスト</returns>
+		public string GetHost()
+		{
+			return Host;
+		}
+
+		#endregion
+
 	}
 }
