@@ -49,7 +49,7 @@ namespace WebAPI
 		/// Webリクエスト
 		/// </summary>
 		private WebRequest Request;
-
+		
 		/// <summary>
 		/// POSTするデータ
 		/// </summary>
@@ -79,8 +79,7 @@ namespace WebAPI
 		/// <summary>
 		/// レスポンスを取得。
 		/// </summary>
-		/// <returns></returns>
-		public string GetResponse()
+		public void GetResponse(Action<Stream> OnResponse)
 		{
 			if(Method == EHttpMethod.POST && PostData != "")
 			{
@@ -97,18 +96,13 @@ namespace WebAPI
 
 			// レスポンス
 			var Response = Request.GetResponse();
-			string Ret = "";
 			using (Response)
 			{
 				using (var ResponseStream = Response.GetResponseStream())
 				{
-					using (var ReadStream = new StreamReader(ResponseStream))
-					{
-						Ret = ReadStream.ReadToEnd();
-					}
+					OnResponse(ResponseStream);
 				}
 			}
-			return Ret;
 		}
 
 		/// <summary>
