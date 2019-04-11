@@ -24,6 +24,8 @@ namespace WebAPI
 		public APICore(string InHost)
 		{
 			Host = InHost;
+
+			// 末尾が「/」で終わっていなかった場合、追加する。
 			if(Host.Substring(Host.Length - 1) != "/")
 			{
 				Host += "/";
