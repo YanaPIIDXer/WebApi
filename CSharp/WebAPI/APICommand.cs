@@ -23,7 +23,7 @@ namespace WebAPI
 		/// <returns>APICommandオブジェクト</returns>
 		public static APICommand CraeteAsPost(string URL)
 		{
-			APICommand Command = new APICommand(URL, "POST");
+			APICommand Command = new APICommand(URL, EHttpMethod.POST);
 			return Command;
 		}
 
@@ -34,7 +34,7 @@ namespace WebAPI
 		/// <returns>APICommandオブジェクト</returns>
 		public static APICommand CreateAsGet(string URL)
 		{
-			APICommand Command = new APICommand(URL, "GET");
+			APICommand Command = new APICommand(URL, EHttpMethod.GET);
 			return Command;
 		}
 
@@ -51,6 +51,27 @@ namespace WebAPI
 		private WebRequest Request;
 
 		/// <summary>
+		/// HTTPメソッド
+		/// </summary>
+		private enum EHttpMethod
+		{
+			/// <summary>
+			/// POST
+			/// </summary>
+			POST,
+
+			/// <summary>
+			/// GET
+			/// </summary>
+			GET,
+		}
+
+		/// <summary>
+		/// メソッド
+		/// </summary>
+		private EHttpMethod Method;
+
+		/// <summary>
 		/// レスポンスを取得。
 		/// </summary>
 		/// <returns></returns>
@@ -60,9 +81,12 @@ namespace WebAPI
 			string Ret = "";
 			using (Response)
 			{
-				using (var ResponseStream = new StreamReader(Response.GetResponseStream()))
+				using (var ResponseStream = Response.GetResponseStream())
 				{
-					Ret = ResponseStream.ReadToEnd();
+					using (var ReadStream = new StreamReader(ResponseStream))
+					{
+						Ret = ReadStream.ReadToEnd();
+					}
 				}
 			}
 			return Ret;
@@ -72,22 +96,29 @@ namespace WebAPI
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="InURL">URL</param>
-		/// <param name="Method">メソッド</param>
-		private APICommand(string InURL, string Method)
+		/// <param name="InMethod">メソッド</param>
+		private APICommand(string InURL, EHttpMethod InMethod)
 		{
 			URL = InURL;
-			Request = CreateRequest(Method);
+			Method = InMethod;
+			Request = CreateRequest();
 		}
 
 		/// <summary>
 		/// WebRequestを生成。
 		/// </summary>
-		/// <param name="Method">メソッド</param>
 		/// <returns>WebRequest</returns>
-		private WebRequest CreateRequest(string Method)
+		private WebRequest CreateRequest()
 		{
 			WebRequest Req = WebRequest.Create(URL);
-			Req.Method = Method;
+			if(Method == EHttpMethod.POST)
+			{
+				Req.Method = "POST";
+			}
+			else
+			{
+				Req.Method = "GET";
+			}
 			return Req;
 		}
 		
