@@ -70,7 +70,7 @@ namespace APITest
 			Command.GetResponse((Response) =>
 			{
 				var Serializer = new DataContractJsonSerializer(typeof(IList<UserData>));
-				IList<UserData> Users = (IList<UserData>)Serializer.ReadObject(Response);
+				IList<UserData> Users = (IList<UserData>)Serializer.ReadObject(Response.GetResponseStream());
 				if(Users == null)
 				{
 					Console.WriteLine("Fuck!!");
