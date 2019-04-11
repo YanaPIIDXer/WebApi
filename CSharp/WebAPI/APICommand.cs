@@ -79,7 +79,7 @@ namespace WebAPI
 		/// <summary>
 		/// レスポンスを取得。
 		/// </summary>
-		public void GetResponse(Action<Stream> OnResponse)
+		public void GetResponse(Action<WebResponse> OnResponse)
 		{
 			if(Method == EHttpMethod.POST && PostData != "")
 			{
@@ -98,10 +98,7 @@ namespace WebAPI
 			var Response = Request.GetResponse();
 			using (Response)
 			{
-				using (var ResponseStream = Response.GetResponseStream())
-				{
-					OnResponse(ResponseStream);
-				}
+				OnResponse(Response);
 			}
 		}
 
