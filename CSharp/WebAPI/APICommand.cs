@@ -51,6 +51,11 @@ namespace WebAPI
 		private WebRequest Request;
 
 		/// <summary>
+		/// POSTするデータ
+		/// </summary>
+		public string PostData { set; private get; }
+
+		/// <summary>
 		/// HTTPメソッド
 		/// </summary>
 		private enum EHttpMethod
@@ -77,6 +82,20 @@ namespace WebAPI
 		/// <returns></returns>
 		public string GetResponse()
 		{
+			if(Method == EHttpMethod.POST && PostData != "")
+			{
+				// POSTする。
+				byte[] Bytes = Encoding.ASCII.GetBytes(PostData);
+				Request.ContentType = "application/x-www-form-urlencoded";
+				Request.ContentLength = Bytes.Length;
+
+				using (var RequestStream = Request.GetRequestStream())
+				{
+					RequestStream.Write(Bytes, 0, Bytes.Length);
+				}
+
+			}
+
 			var Response = Request.GetResponse();
 			string Ret = "";
 			using (Response)
@@ -100,6 +119,7 @@ namespace WebAPI
 		private APICommand(string InURL, EHttpMethod InMethod)
 		{
 			URL = InURL;
+			PostData = "";
 			Method = InMethod;
 			Request = CreateRequest();
 		}
