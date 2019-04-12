@@ -3,8 +3,6 @@
  */
 package WebAPI;
 
-import java.net.HttpURLConnection;
-
 /**
  * APIコアクラス
  */
@@ -25,5 +23,27 @@ public class APICore
 		{
 			host += "/";
 		}
+	}
+
+	/**
+	 * APIコマンドをPOSTで生成。
+	 * @param api API
+	 * @return コマンドオブジェクト
+	 */
+	public APICommand createPost(String api)
+	{
+		APICommand command = APICommand.createAsPost(host + api);
+		return command;
+	}
+
+	/**
+	 * APIコマンドをGETで生成。
+	 * @param api API
+	 * @return コマンドオブジェクト
+	 */
+	public APICommand createGet(String api)
+	{
+		APICommand command = APICommand.createAsGet(host + api);
+		return command;
 	}
 }
