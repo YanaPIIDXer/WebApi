@@ -3,26 +3,27 @@
  */
 package WebAPI;
 
+import java.net.HttpURLConnection;
+
 /**
  * APIコアクラス
  */
 public class APICore
 {
+	// ホスト
+	private String host;
 
 	/**
 	 * コンストラクタ
+	 * @param inHost ホスト
 	 */
-	public APICore()
+	public APICore(String inHost)
 	{
+		host = inHost;
+		// 末尾が「/」でなければ付加する。
+		if(!host.substring(host.length() -1).equals("/"))
+		{
+			host += "/";
+		}
 	}
-
-	/**
-	 * テスト用メソッド
-	 * @return テスト用文字列
-	 */
-	public String test()
-	{
-		return "WebAPI Test";
-	}
-
 }

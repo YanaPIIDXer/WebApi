@@ -8,11 +8,8 @@ import WebAPI.*;
  */
 public class Test
 {
-
 	public static void main(String[] args)
 	{
-		APICore core = new APICore();
-		System.out.println(core.test());
+		APICore core = new APICore("http://Test.net");
 	}
-
 }
